@@ -53,8 +53,8 @@ router.post("/", async (req, res)=>{
         req.body.password = hashedPassword;
         const newUser = await User.create(req.body)
         newUser.password = null;
-        req.session.username = foundUser.username;
-        req.session.usersId = foundUser._id;
+        req.session.username = newUser.username;
+        req.session.usersId = newUser._id;
         res.json({
             status: 200,
             data: newUser

@@ -19,35 +19,37 @@ class BoardContainer extends Component {
     }
 
     componentDidMount(){
-        this.getBoards();
+        this.props.getBoards()
     };
 
-    getBoards = async () => {
-        const boards = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/boards`, {
-            credentials: 'include'
-        })
-        const boardsJSON = await boards.json();
-        this.setState({
-            boards: boardsJSON.data,
-        })
-    };
+    // getBoards = async () => {
+    //     const boards = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/boards`, {
+    //         credentials: 'include'
+    //     })
+    //     const boardsJSON = await boards.json();
+    //     this.setState({
+    //         boards: boardsJSON.data,
+    //     })
+    // };
 
-    createBoard = async (formData) => {
-        const newBoard = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/boards`, {
-            credentials: 'include',
-            method: "POST",
-            body: JSON.stringify(formData),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-        const parsedResponse = await newBoard.json();
-        if(newBoard.status === 200){
-            this.setState({
-                boards: [parsedResponse.data, ...this.state.boards]
-            })
-        }
-    };
+    // createBoard = async (formData) => {
+    //     const newBoard = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/boards`, {
+    //         credentials: 'include',
+    //         method: "POST",
+    //         body: JSON.stringify(formData),
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         }
+    //     })
+    //     console.log(newBoard, 'newBoard')
+    //     const parsedResponse = await newBoard.json();
+    //     console.log(parsedResponse, 'parsedResponse')
+    //     if(newBoard.status === 200){
+    //         this.setState({
+    //             boards: [parsedResponse.data, ...this.state.boards]
+    //         })
+    //     }
+    // };
 
     selectedImageStateChange = (newState) => {
         this.setState({
@@ -152,7 +154,6 @@ class BoardContainer extends Component {
         this.updateBoardAfterDelete(board);
     }; 
 
-    // change add new image to this?
     editBoardButtonClick = (e) => {
         this.setState({
             editBoardId: e.target.id
@@ -169,7 +170,6 @@ class BoardContainer extends Component {
         this.toggleEdit();
     };
 
-    // figure out why this is working but breaking image loop
     editBoard = async (text, board) => {
         console.log(text)
         console.log(board)
@@ -189,15 +189,16 @@ class BoardContainer extends Component {
     }; 
 
     render(){
-        console.log(this.props.showBoards)
+        console.log(this.state.boards, 'this.state.boards board container')
+        console.log(this.state, 'this.state BoardContainer')
         return (
             <div>   
-                <MakeBoard createBoard={ this.createBoard } selectedImageStateChange={ this.selectedImageStateChange } 
+                <MakeBoard createBoard={ this.props.createBoard } selectedImageStateChange={ this.selectedImageStateChange } 
                 handleImageClick={ this.handleImageClick } imageStateChange={ this.imageStateChange } 
                 updateBoard={ this.updateBoard } toggle={ this.toggle } modal={ this.state.modal } classChange={ this.state.classChange } 
                 handleImageSubmit={ this.handleImageSubmit } />
                 <hr />      
-                <BoardDetail boards={ this.state.boards } addNewImageButtonClick={ this.addNewImageButtonClick } 
+                <BoardDetail allBoards={ this.props.allBoards } addNewImageButtonClick={ this.addNewImageButtonClick } 
                 deleteBoardButtonClick={ this.deleteBoardButtonClick } deleteImageButtonClick= { this.deleteImageButtonClick }
                 toggleEdit={ this.toggleEdit } editModal={ this.state.editModal } editBoardButtonClick={ this.editBoardButtonClick }
                 handleEditSubmit={ this.handleEditSubmit } showBoards={ this.props.showBoards }  /> 
