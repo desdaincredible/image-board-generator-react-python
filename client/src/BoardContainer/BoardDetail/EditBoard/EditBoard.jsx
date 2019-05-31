@@ -22,6 +22,7 @@ class EditBoard extends Component {
     // };
 
     render(){
+        console.log(this.props)
         return (
             <div>
                 <Modal isOpen={ this.props.editModal } toggle={ this.props.toggleEdit }>

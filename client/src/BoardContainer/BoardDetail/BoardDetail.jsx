@@ -8,12 +8,17 @@ class BoardDetail extends Component {
         super();
         this.state = {
             id: "",
+            title: "",
+            description: ""
         }
     };
 
     render(){
         const usersBoardsToShow = this.props.boards;
         const boardsToShow = usersBoardsToShow.map((board, i) => {
+            this.setState({
+                title: board.title
+            })
             return (
                 <div key={ i } id={ board._id } className="parent">
                     <div><h2>{ board.title }</h2></div>

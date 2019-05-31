@@ -36,7 +36,7 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// logout NOT WORKING
+// logout
 router.get('/logout', async (req, res) => {
     try{
         req.session.destroy();

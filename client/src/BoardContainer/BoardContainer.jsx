@@ -173,8 +173,6 @@ class BoardContainer extends Component {
 
     // figure out why this is working but breaking image loop
     editBoard = async (text, board) => {
-        console.log(text)
-        console.log(board)
         const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/boards/${this.state.editBoardId}`, {
             method: "PUT",
             body: JSON.stringify(text),
@@ -187,7 +185,7 @@ class BoardContainer extends Component {
                 boards: [...this.state.boards, text, board]
             })
         }
-        this.getBoards();
+        this.getUser();
     }; 
 
     render(){
